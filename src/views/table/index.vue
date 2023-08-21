@@ -2,6 +2,24 @@
   <div class="app-container">
     <el-button type="success" icon="el-icon-download" @click="download(0)">导出groupData</el-button>
     <el-button type="success" icon="el-icon-download" @click="download(1)">导出pointData</el-button>
+    操作员：
+    <el-select
+      v-model="value"
+      filterable
+      remote
+      clearable
+      reserve-keyword
+      placeholder="请输入关键词"
+      @change="handleGetDataByUser"
+    >
+      <el-option
+        v-for="item in allUserName"
+        :key="item.value"
+        :label="item.label"
+        :value="item.label"
+      >
+      </el-option>
+    </el-select>
     <template>
       <el-table
         :data="tableData"
@@ -106,102 +124,191 @@
                     {{ scope.row.tz }}
                   </template>
                 </el-table-column>
-                <el-table-column label="groupId" width="110" align="center">
-                  <template slot-scope="scope">
-                    {{ scope.row.groupid }}
-                  </template>
-                </el-table-column>
+                <!--                <el-table-column label="groupId" width="110" align="center">-->
+                <!--                  <template slot-scope="scope">-->
+                <!--                    {{ scope.row.groupid }}-->
+                <!--                  </template>-->
+                <!--                </el-table-column>-->
               </el-table>
             </el-form>
           </template>
         </el-table-column>
+        <!--        <el-table-column-->
+        <!--          label="ID"-->
+        <!--          prop="id">-->
+        <!--        </el-table-column>-->
         <el-table-column
-          label="ID"
-          prop="id">
+          label="操作员"
+          align="center"
+          prop="username">
         </el-table-column>
         <el-table-column
-          label="name"
+          label="文件名"
+          align="center"
           prop="name">
         </el-table-column>
         <el-table-column
-          label="number"
-          prop="number">
-        </el-table-column>
-        <el-table-column
-          label="material"
+          label="材料"
+          align="center"
           prop="material">
         </el-table-column>
         <el-table-column
-          label="impactDevice"
+          label="探头类型"
+          align="center"
           prop="impactdevice">
         </el-table-column>
         <el-table-column
-          label="direction"
+          label="方向"
+          align="center"
           prop="direction">
         </el-table-column>
         <el-table-column
-          label="count"
+          label="次数"
+          align="center"
           prop="count">
         </el-table-column>
         <el-table-column
-          label="displacementCurve"
-          prop="displacementCurve">
+          label="硬度标准"
+          align="center"
+          prop="hardnessstandard">
         </el-table-column>
         <el-table-column
-          label="strengthcurve"
-          prop="strengthCurve">
+          label="回弹性标准"
+          width="110"
+          align="center"
+          prop="reboundstandard">
         </el-table-column>
         <el-table-column
-          label="velocityCurve"
-          prop="velocityCurve">
+          label="料号"
+          align="center"
+          prop="partnumber">
         </el-table-column>
         <el-table-column
-          label="hardnessStandard"
-          prop="hardnessStandard">
-        </el-table-column>
-        <el-table-column
-          label="reboundstandard"
-          prop="reboundStandard">
-        </el-table-column>
-        <el-table-column
-          label="partnumber"
-          prop="partNumber">
-        </el-table-column>
-        <el-table-column
-          label="temperature"
+          label="温度"
+          align="center"
           prop="temperature">
         </el-table-column>
         <el-table-column
-          label="averagevalue"
+          label="平均值"
+          align="center"
           prop="averagevalue">
         </el-table-column>
         <el-table-column
-          label="vmaxaveragevalue"
+          label="vmax平均值"
+          width="110"
+          align="center"
           prop="vmaxaveragevalue">
         </el-table-column>
         <el-table-column
-          label="t1averagevalue"
+          label="t1平均值"
+          align="center"
           prop="t1averagevalue">
         </el-table-column>
         <el-table-column
-          label="vminaveragevalue"
+          label="vmin平均值"
+          width="110"
+          align="center"
           prop="vminaveragevalue">
         </el-table-column>
         <el-table-column
-          label="t2averagevalue"
+          label="t2平均值"
+          align="center"
           prop="t2averagevalue">
         </el-table-column>
         <el-table-column
-          label="taveragevalue"
+          label="t平均值"
+          align="center"
           prop="taveragevalue">
         </el-table-column>
         <el-table-column
-          label="dhaveragevalue"
+          label="dh平均值"
+          align="center"
           prop="dhaveragevalue">
         </el-table-column>
         <el-table-column
-          label="vraveragevalue"
+          label="vr平均值"
+          align="center"
           prop="vraveragevalue">
+        </el-table-column>
+        <el-table-column
+          label="res平均值"
+          width="110"
+          align="center"
+          prop="resaveragevalue">
+        </el-table-column>
+        <el-table-column
+          label="tan平均值"
+          width="110"
+          align="center"
+          prop="tanaveragevalue">
+        </el-table-column>
+        <el-table-column
+          label="fmax平均值"
+          width="110"
+          align="center"
+          prop="fmaxaveragevalue">
+        </el-table-column>
+        <el-table-column
+          label="tf平均值"
+          align="center"
+          prop="tfaveragevalue">
+        </el-table-column>
+        <el-table-column
+          label="smax平均值"
+          width="110"
+          align="center"
+          prop="smaxaveragevalue">
+        </el-table-column>
+        <el-table-column
+          label="ts平均值"
+          align="center"
+          prop="tsaveragevalue">
+        </el-table-column>
+        <el-table-column
+          label="k平均值"
+          align="center"
+          prop="kaveragevalue">
+        </el-table-column>
+        <el-table-column
+          label="tz平均值"
+          align="center"
+          prop="tzaveragevalue">
+        </el-table-column>
+        <el-table-column
+          label="serialNumber"
+          width="110"
+          align="center"
+          prop="serialnumber">
+        </el-table-column>
+        <el-table-column
+          label="measureMode"
+          width="120"
+          align="center"
+          prop="measuremode">
+        </el-table-column>
+        <el-table-column
+          label="alertEnable"
+          width="110"
+          align="center"
+          prop="alertenable">
+        </el-table-column>
+        <el-table-column
+          label="alertUpper"
+          width="110"
+          align="center"
+          prop="alertupper">
+        </el-table-column>
+        <el-table-column
+          label="alertLower"
+          width="110"
+          align="center"
+          prop="alertlower">
+        </el-table-column>
+        <el-table-column
+          label="timestanp"
+          width="110"
+          align="center"
+          prop="timestamp">
         </el-table-column>
       </el-table>
     </template>
@@ -223,7 +330,7 @@
 </template>
 
 <script>
-import { getGroupData, getPointData, downloadFile } from '@/api/table'
+import {getGroupData, getPointData, downloadFile, getAllUserName} from '@/api/table'
 
 export default {
   filters: {
@@ -239,95 +346,59 @@ export default {
   data() {
     return {
       list: null,
-      tableList: [],
+      tableList: {},
       listLoading: true,
-      tableData: [{
-        id: '0',
-        name: '好滋好味鸡蛋仔',
-        category: '江浙小吃、小吃零食',
-        desc: '荷兰优质淡奶，奶香浓而不腻',
-        address: '上海市普陀区真北路',
-        shop: '王小虎夫妻店',
-        shopId: '10333'
-      }, {
-        id: '1',
-        name: '好滋好味鸡蛋仔',
-        category: '江浙小吃、小吃零食',
-        desc: '荷兰优质淡奶，奶香浓而不腻',
-        address: '上海市普陀区真北路',
-        shop: '王小虎夫妻店',
-        shopId: '10333'
-      }, {
-        id: '2',
-        name: '好滋好味鸡蛋仔',
-        category: '江浙小吃、小吃零食',
-        desc: '荷兰优质淡奶，奶香浓而不腻',
-        address: '上海市普陀区真北路',
-        shop: '王小虎夫妻店',
-        shopId: '10333'
-      }, {
-        id: '3',
-        name: '好滋好味鸡蛋仔',
-        category: '江浙小吃、小吃零食',
-        desc: '荷兰优质淡奶，奶香浓而不腻',
-        address: '上海市普陀区真北路',
-        shop: '王小虎夫妻店',
-        shopId: '10333'
-      }],
-      pageSize: 3,
+      tableData: [],
+      pageSize: 5,
       total: 30,
-      currentPage: 1
+      currentPage: 1,
+      allUserName: [],
+      value: '',
+      tmpValue: ''
     }
   },
   created() {
-    // this.fetchGroupData()
     this.fetchPointData()
   },
   methods: {
-    // fetchData() {
-    //   this.listLoading = true
-    //   getList().then(response => {
-    //     this.list = response.data.items
-    //     this.listLoading = false
-    //   })
-    // },
     fetchPointData() {
+      getAllUserName().then(res => {
+        var allUser = res.data
+        for (let i = 0; i < allUser.length; i++) {
+          var iterm = new Object()
+          iterm.value = i
+          iterm.label = allUser[i]
+          this.allUserName.push(iterm)
+        }
+      })
       this.fetchGroupData()
       this.listLoading = true
       getPointData().then(res => {
         this.tableList = res.data
-        // this.listLoading = false
-        // this.tableList[this.list.groupid] = this.list
-        // this.tableList[1] = this.list
-        // this.tableList[2] = this.list
-        console.log('tablelist', this.tableList)
-        console.log('pointData', res)
+        this.listLoading = false
       })
     },
     fetchGroupData() {
       this.listLoading = true
       getGroupData().then(response => {
         this.tableData = response.data.records
-        console.log('groupData', response.data)
         this.total = response.data.total
         this.listLoading = false
       })
     },
     download(path) {
       downloadFile(path).then(res => {
-        console.log('download', res)
         window.open(res.data)
       })
     },
 
     // 分页处理
     handleSizeChange(val) {
-      console.log('执行了handleSizeChange)')
       const formData = new FormData()
       formData.append('current', this.currentPage)
       formData.append('pageSize', val)
+      formData.append('userName', this.value)
       getGroupData(formData).then(res => {
-        console.log('切换pagesize', res)
         this.tableData = res.data.records
         this.total = res.data.total
       })
@@ -338,13 +409,22 @@ export default {
       const formData = new FormData()
       formData.append('current', val)
       formData.append('pageSize', this.pageSize)
+      formData.append('userName', this.value)
       getGroupData(formData).then(res => {
-        console.log('切换current', res)
         this.tableData = res.data.records
         this.total = res.data.total
       })
-      console.log('handleCurrentChange)')
       this.currentPage = val
+    },
+    handleGetDataByUser() {
+      const formData = new FormData()
+      formData.append('current', this.currentPage)
+      formData.append('pageSize', this.pageSize)
+      formData.append('userName', this.value)
+      getGroupData(formData).then(res => {
+        this.tableData = res.data.records
+        this.total = res.data.total
+      })
     }
   }
 }

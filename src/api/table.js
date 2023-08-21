@@ -28,9 +28,9 @@ export function downloadFile(data) {
     method: 'get'
   })
 }
-// export function downloadGroupData() {
-//   return request({
-//     url: '/api/list/getPointData',
-//     method: 'get'
-//   })
-// }
+export function getAllUserName() {
+  return request({
+    url: '/api/list/getAllUserName',
+    method: 'get'
+  })
+}
