@@ -9,7 +9,7 @@ export function getList(params) {
 }
 export function getGroupData(data) {
   return request({
-    url: '/api/list/getGroupData',
+    url: '/list/getGroupData',
     method: 'post',
     data
   })
@@ -17,20 +17,20 @@ export function getGroupData(data) {
 
 export function getPointData() {
   return request({
-    url: '/api/list/getPointData',
+    url: '/list/getPointData',
     method: 'get'
   })
 }
 
 export function downloadFile(data) {
   return request({
-    url: '/api/list/getDownloadUrl/' + data,
+    url: '/list/getDownloadUrl/' + data,
     method: 'get'
   })
 }
 export function getAllUserName() {
   return request({
-    url: '/api/list/getAllUserName',
+    url: '/list/getAllUserName',
     method: 'get'
   })
 }

@@ -418,7 +418,7 @@ export default {
     },
     handleGetDataByUser() {
       const formData = new FormData()
-      formData.append('current', this.currentPage)
+      formData.append('current', 1)
       formData.append('pageSize', this.pageSize)
       formData.append('userName', this.value)
       getGroupData(formData).then(res => {
