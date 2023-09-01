@@ -305,8 +305,8 @@
           prop="alertlower">
         </el-table-column>
         <el-table-column
-          label="timestanp"
-          width="110"
+          label="时间"
+          width="150"
           align="center"
           prop="timestamp">
         </el-table-column>
@@ -330,7 +330,7 @@
 </template>
 
 <script>
-import {getGroupData, getPointData, downloadFile, getAllUserName} from '@/api/table'
+import { getGroupData, getPointData, downloadFile, getAllUserName } from '@/api/table'
 
 export default {
   filters: {
@@ -382,6 +382,7 @@ export default {
       this.listLoading = true
       getGroupData().then(response => {
         this.tableData = response.data.records
+        this.transformDate()
         this.total = response.data.total
         this.listLoading = false
       })
@@ -400,6 +401,7 @@ export default {
       formData.append('userName', this.value)
       getGroupData(formData).then(res => {
         this.tableData = res.data.records
+        this.transformDate()
         this.total = res.data.total
       })
       this.pageSize = val
@@ -412,6 +414,7 @@ export default {
       formData.append('userName', this.value)
       getGroupData(formData).then(res => {
         this.tableData = res.data.records
+        this.transformDate()
         this.total = res.data.total
       })
       this.currentPage = val
@@ -423,8 +426,18 @@ export default {
       formData.append('userName', this.value)
       getGroupData(formData).then(res => {
         this.tableData = res.data.records
+        this.transformDate()
         this.total = res.data.total
       })
+    },
+    transformDate() {
+      for (var i = 0; i < this.tableData.length; i++) {
+        var date = new Date(this.tableData[i].timestamp)
+        // console.log('timestamp', this.tableData[i].timestamp)
+        var month = date.getMonth() + 1
+        this.tableData[i].timestamp = date.getFullYear() + '-' + month + '-' + date.getDate() + '  ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds()
+        // console.log('date', date.getFullYear() + '-' + month + '-' + date.getDate() + '  ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds())
+      }
     }
   }
 }
